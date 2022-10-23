@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from request.models import BlogPostRequest
+from modelingestion.request.models import BlogPostRequest
 
 
 class BlogPostResponseTestCase(TestCase):

@@ -10,17 +10,16 @@ COPY sproutaitest sproutaitest
 COPY poetry.lock poetry.lock
 COPY pyproject.toml pyproject.toml
 COPY Makefile Makefile
+
+RUN make install
+
+FROM base as main
 # Copy hello-cron file to the cron.d directory
 COPY backlog-cron /etc/cron.d/backlog-cron
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/backlog-cron
 # Apply cron job
 RUN crontab /etc/cron.d/backlog-cron
-
-RUN make install
-
-FROM base as main
-
 EXPOSE 5000
 ENTRYPOINT ["make", "run-django-server"]
 

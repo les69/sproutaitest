@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from modelingestion.views import (blog_post_details_by_id,
+                                  blog_post_details_by_title, ingest_blogpost)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('posts/', ingest_blogpost, name="ingest-blogpost"),
+    path('posts/<int:blog_post_id>', blog_post_details_by_id, name="view_blogpost_by_id"),
+    path('posts/<str:blog_title>', blog_post_details_by_title, name="view_blogpost_by_title")
 ]

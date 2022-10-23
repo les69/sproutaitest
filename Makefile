@@ -13,11 +13,8 @@ install-dev:
 check-style:
 	flake8  .
 
-format:
-	isort . --check --diff
-
 full-test-suite:
-	make check-style && make format && make django-tests
+	make check-style && make django-tests
 
 django-tests:
 	cd ./sproutaitest && \
@@ -43,7 +40,7 @@ run-ingestion-endpoint:
 
 run-unit-tests:
 	docker build -t ingestion-testing -f ingestion.Dockerfile --target test . && \
-	docker run --rm -d ingestion-testing
+	docker run --rm ingestion-testing
 
 start-network:
 	docker network create -d bridge endpointnetwork
