@@ -1,15 +1,22 @@
 import logging
 
-from requests import RequestException
-
-from modelingestion.interfaces.exceptions import ApiEndpointException
 from modelingestion.interfaces.mlendpoint import LanguageDetectionModelProtocol
 from modelingestion.models import BacklogSentence, BlogPost
+from requests import RequestException
 
 logger = logging.Logger(__name__)
 
 
+class ApiEndpointException(Exception):
+    pass
+
+
 def save_sentence_on_failure(func):
+    """
+    Save the sentence that failed processing into the database backlog for offline processing
+    :param func:
+    :return:
+    """
     def _wrapper(*args, **kwargs):
         try:
             _res = func(*args, **kwargs)
@@ -25,8 +32,6 @@ def save_sentence_on_failure(func):
                 sentence = args
             logger.error(f"Failed processing sentence {sentence} for blog_post: {blog_post} because {endpoint_failure}")
             BacklogSentence.objects.create(blog_post=blog_post, sentence=sentence)
-        except Exception as general_exception:
-            raise general_exception
         return None
 
     return _wrapper
@@ -40,7 +45,7 @@ class BlogpostProcessor:
     @save_sentence_on_failure
     def process_sentence_for_blog_post(self, blog_post: BlogPost, sentence: str):
         """
-
+        Use the given model to detect if there is any foul language in the given text
         :param blog_post:
         :param sentence:
         :return:
@@ -50,7 +55,8 @@ class BlogpostProcessor:
 
     def process_backlog_post(self, backlog_sentence: BacklogSentence) -> bool:
         """
-
+        Re-Process sentences that previously failed because of unforeseen errors. In case of errors, don't delete
+        the entries for further delayed processing
         :param backlog_sentence:
         :return:
         """

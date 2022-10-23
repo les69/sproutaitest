@@ -2,9 +2,8 @@ import json
 from typing import Dict
 
 import requests
-
-from modelingestion.interfaces.exceptions import ApiEndpointException
 from modelingestion.interfaces.mlendpoint import LanguageDetectionModelProtocol
+from modelingestion.mlengine.processor import ApiEndpointException
 from modelingestion.request.models import MLEndpointResponse
 
 

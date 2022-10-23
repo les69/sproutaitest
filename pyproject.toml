@@ -1,14 +1,19 @@
 [tool.poetry]
 name = "sproutaitest"
 version = "0.1.0"
-description = "Tech test for sprout.ai"
-authors = ["Mirko Morandi"]
+description = ""
+authors = ["mirko"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
 django = "^4.1.2"
+requests = "^2.28.1"
 
+
+[tool.poetry.dev-dependencies]
+flake8 = "^5.0.4"
+isort = "^5.10.1"
 
 [build-system]
 requires = ["poetry-core"]
