@@ -1,0 +1,2 @@
+class ApiEndpointException(Exception):
+    pass
