@@ -34,5 +34,16 @@ out of scope within this tech task.
 and when something failed. Entries can be disabled rather than deleted
 
 - More testing coverage would be nice
-- I dediced to use *title* as the key for a blog post, making it unique within the database. This is not something I'd want
+- Sentences are processed each time as new; this works for this use case but in real world applications it would make
+more sense to cache these results to avoid costly re-computing. Also, this can be improved with an addition of the model version
+that did the detection, and can be used to update detections in the case of a newer model and help compare models performances
+in time.
+- I decided to use *title* as the key for a blog post, making it unique within the database. This is not something I'd want
 in a real world application as it might constrain the application too much. 
+- The ingestion API does its best to do everything on the fly, but in the event of long pieces
+of text to analyze, it could easily become a bottleneck. In that case it would be better to send larger texts directly
+to be processed offline in order to not saturate the ingestion api.
+
+## Conclusion
+
+I had fun doing this, I hope you like my solution!
